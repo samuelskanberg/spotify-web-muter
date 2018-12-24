@@ -2,6 +2,7 @@
 from flask import Flask, request
 import argparse
 import sys
+import subprocess
 app = Flask(__name__)
 
 contains = ""
@@ -9,9 +10,13 @@ contains = ""
 
 def mute():
     print("Muting")
+    cm = ["amixer", "-q", "-D", "pulse", "sset", "Master", "off"]
+    subprocess.Popen(cm)
 
 def unmute():
     print("Unmuting")
+    cm = ["amixer", "-q", "-D", "pulse", "sset", "Master", "on"]
+    subprocess.Popen(cm)
 
 @app.route("/", methods=['POST'])
 def hello():
